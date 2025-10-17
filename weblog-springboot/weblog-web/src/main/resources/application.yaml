@@ -13,10 +13,10 @@ spring:
     multipart:
       # 限制上传文件大小
       max-file-size: 10MB
-      
+
 jwt:
   # 签发人
-  issuer: quanxiaoha
+  issuer: PureNews
   # 秘钥
   secret: gR6cytlUlgMfVh08nLFZf8hMk4mdJDX5rWBVlsCbKvRlWcLwNRU6+rIPcLx21x191kJgP8udtoZuHt5yUDWtgg==
   # token 过期时间（单位：分钟） 24*60
@@ -26,18 +26,18 @@ jwt:
   # token Header 中的 value 值前缀
   tokenPrefix: Bearer
 
-  
+
 #=================================================================
-# minio (上传图片需要，需配置成自己的地址)
+# minio (上传图片需要，需配置成自己的地址)admin   9FQKgEvdVWu8PjKX  ZTFu7LHeFcje0JP2
 #=================================================================
 minio:
-  endpoint: https://img.xxx.com
-  accessKey: xxx
-  secretKey: xxx
-  bucketName: xxx
+  endpoint: http://127.0.0.1:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: pure-news
 
 #=================================================================
 # IP归属地信息库文件路径 ip2region.xdb
 #=================================================================
 xdb:
-  profile: xxx
+  profile: D:\minio\ip2region.xdb

@@ -4,6 +4,7 @@ import com.quanxiaoha.weblog.common.enums.ResponseCodeEnum;
 import com.quanxiaoha.weblog.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.lionsoul.ip2region.xdb.Version;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -71,12 +72,21 @@ public class AgentRegionUtils {
         String hdu = "0";
         Searcher searcher;
         try {
-            searcher = Searcher.newWithFileOnly(xdbPath);
+            if (ip == null || ip.trim().isEmpty()) {
+                log.warn("IP 地址为空，无法解析");
+                return "未知地区";
+            }
+            if (ip.contains(":") || ip.equals("::1") || ip.equals("0:0:0:0:0:0:0:1")) {
+                searcher = Searcher.newWithFileOnly(Version.IPv6,xdbPath);
+            }else{
+                searcher = Searcher.newWithFileOnly(Version.IPv4,xdbPath);
+            }
+
         } catch (IOException e) {
             log.error("failed to create searcher with {}: {}\n", xdbPath, e);
             return "外太空";
         }
-
+        //todo 存在问题
         // 2、查询 ip = "175.24.184.183";
         try {
             String region = searcher.search(ip);
